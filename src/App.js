@@ -1,23 +1,15 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import Init from './components/Init';
+import Map from './components/Map';
+
 
 function App() {
+  const [start, setStart] = useState(false)
+  console.log('start', start)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App shadow-lg border-2">
+      {start ? <Map /> : <Init start={start} setStart={setStart} />}
     </div>
   );
 }
