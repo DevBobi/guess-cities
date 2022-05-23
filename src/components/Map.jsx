@@ -1,37 +1,48 @@
-import React from "react";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import {cityData} from '../data' 
+import React, { useEffect, useState } from 'react'
+import { MapContainer, TileLayer } from 'react-leaflet'
+import { cityData } from '../data'
+// import getDistance from '../utils/measure'
+import distance from '../utils/measure'
+import LocationMarker from './Example'
+import Top from './Top'
 
 const Map = () => {
-  return (
-    <div>
-      <MapContainer
-        style={{ height: "100vh", width: "100vw" }}
-        center={[46.91343584453294, 7.1382015341641]}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          url="https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=MgRUpn1PKeDtToo1Dz8k"
-          attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
-        />
+    const [position, setPosition] = useState({ lat: null, lng: null })
+    const [score, setScore] = useState(0)
+    const [remainingDistance, setRemainingDistance] = useState(1500)
+    const [km, setKm] = useState(null)
 
+    const city = cityData.cities[Math.floor(Math.random() * 5)]
 
-        {/* <Marker position={[51.505, -0.09]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker> */}
+    useEffect(() => {
+        const result = distance(position, city.position, 'km')
+        setKm(result)
+        setRemainingDistance(remainingDistance - result)
+        if (result <= 50) setScore(score + 1)
+    }, [position, city.position])
 
-        {
-          cityData.cities.map((state) =>{
-            
-          })
-        }
+    return (
+        <div className='p-10 min-h-screen flex-col flex justify-center items-center rounded-2xl'>
+            <Top cityName={city.name} remainingDistance={remainingDistance} score={score} />
+            <MapContainer
+                style={{ height: '70vh', width: '70vw' }}
+                center={[54.526, 15.2551]}
+                zoom={5}
+                whenReady={(e) => console.log(e.target)}
+                scrollWheelZoom={false}>
+                <TileLayer
+                    url='https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=MgRUpn1PKeDtToo1Dz8k'
+                    attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+                />
+                <LocationMarker position={position} setPosition={setPosition} />
+            </MapContainer>
+            {km && (
+                <div>
+                    Your needle pin's distance from <span className="text-red-600 font-weight-bold text-xl py-2">{city.name}</span> is {km.toFixed(2)}km
+                </div>
+            )}
+        </div>
+    )
+}
 
-      </MapContainer>
-    </div>
-  );
-};
-
-export default Map;
+export default Map

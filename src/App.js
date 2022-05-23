@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import Init from './components/Init';
 import Map from './components/Map';
+import './utils/measure'
 
 
 function App() {
