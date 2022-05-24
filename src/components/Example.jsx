@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { Marker, Popup, useMap } from 'react-leaflet'
 
 function LocationMarker({position, setPosition}) {

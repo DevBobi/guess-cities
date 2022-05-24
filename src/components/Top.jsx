@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Top = ({ cityName, remainingDistance, score }) => {
+const Top = ({ cityName, initialDistance, score }) => {
     return (
         <div className='flex justify-between w-full'>
             <div>
@@ -12,7 +12,7 @@ const Top = ({ cityName, remainingDistance, score }) => {
             </div>
 
             <div className=''>
-                Left Miles <b>{remainingDistance.toFixed(2)} KM</b>
+                Left Miles <b>{initialDistance} KM</b>
             </div>
         </div>
     )

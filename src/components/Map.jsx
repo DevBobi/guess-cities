@@ -9,27 +9,30 @@ import Top from './Top'
 const Map = () => {
     const [position, setPosition] = useState({ lat: null, lng: null })
     const [score, setScore] = useState(0)
-    const [remainingDistance, setRemainingDistance] = useState(1500)
-    const [km, setKm] = useState(null)
+    const [initialDistance, setInitialDistance] = useState(1500)
+    const [remainingDistance, setRemainingDistance] = useState(0)
+    const [km, setKm] = useState(0)
 
     const city = cityData.cities[Math.floor(Math.random() * 5)]
 
     useEffect(() => {
         const result = distance(position, city.position, 'km')
         setKm(result)
-        setRemainingDistance(remainingDistance - result)
-        if (result <= 50) setScore(score + 1)
+        if(remainingDistance <=0){
+            alert('Game Over')
+        }
+        else if (result < 50) setScore(score + 1)
     }, [position, city.position])
 
     return (
         <div className='p-10 min-h-screen flex-col flex justify-center items-center rounded-2xl'>
-            <Top cityName={city.name} remainingDistance={remainingDistance} score={score} />
+            <Top cityName={city.name} initialDistance={initialDistance} score={score} />
             <MapContainer
                 style={{ height: '70vh', width: '70vw' }}
-                center={[54.526, 15.2551]}
+                center={[46.84697391435467, 7.971664353478799]}
                 zoom={5}
                 whenReady={(e) => console.log(e.target)}
-                scrollWheelZoom={false}>
+                scrollWheelZoom={true}>
                 <TileLayer
                     url='https://api.maptiler.com/maps/basic/256/{z}/{x}/{y}.png?key=MgRUpn1PKeDtToo1Dz8k'
                     attribution='<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
