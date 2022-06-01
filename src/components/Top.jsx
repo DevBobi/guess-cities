@@ -1,21 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 
-const Top = ({ cityName, initialDistance, score }) => {
-    return (
-        <div className='flex justify-between w-full'>
-            <div>
-                Your Score is <b>{score}</b>
-            </div>
+const Top = ({ cityName, distance }) => {
+  const [left, setLeft] = useState(1500);
+  const [score, setScore] = useState(0);
 
-            <div className='mb-3'>
-                Select <b>{cityName}</b>
-            </div>
+  console.log(distance)
 
-            <div className=''>
-                Left Miles <b>{initialDistance} KM</b>
-            </div>
-        </div>
-    )
-}
+  useEffect(() => {
+      setLeft(left - distance)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cityName])
 
-export default Top
+  return (
+    <div className="flex justify-between w-full">
+      <div>
+        Your Score is <b>{score}</b>
+      </div>
+
+      <div className="mb-3">
+        Select <b>{cityName}</b>
+      </div>
+
+      <div className="">
+        Left Miles <b>{left.toFixed(2)} KM</b>
+      </div>
+    </div>
+  );
+};
+
+export default Top;

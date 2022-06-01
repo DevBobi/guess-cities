@@ -35,5 +35,34 @@ export const cityData = {
                 lng: -0.127758,
             },
         },
+        {
+            name: "Oslo",
+            position: {
+            lat: 59.913869, 
+            lng:10.752245 
+            },
+        },
+        {
+            name: "Paris",
+            position: {
+            lat: 48.856614, 
+            lng:2.352222 
+            },
+        },
+            {
+            name: "Wien",
+            position: {
+            lat: 48.208174, 
+            lng:16.373819 
+            }
+        },
+        {
+            name: "Budapest", position:
+            {
+            lat: 47.497912, 
+            lng:19.040235 
+            }
+        }
+        
     ],
 }
