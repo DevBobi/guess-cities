@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 
 const Top = ({ cityName, distance }) => {
-  const [left, setLeft] = useState(1500);
+  const [leftScore, setLeftScore] = useState(1500);
   const [score, setScore] = useState(0);
 
   console.log(distance)
 
   useEffect(() => {
-      setLeft(left - distance)
+      setLeftScore(leftScore - distance)
       // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cityName])
 
@@ -22,7 +22,7 @@ const Top = ({ cityName, distance }) => {
       </div>
 
       <div className="">
-        Left Miles <b>{left.toFixed(2)} KM</b>
+        Left Miles <b>{leftScore.toFixed(2)} KM</b>
       </div>
     </div>
   );
